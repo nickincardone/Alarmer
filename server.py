@@ -1,5 +1,5 @@
-from alarmer import alarm_clock
+from alarmer import AlarmClock
 
 if __name__ == '__main__':
-    alarm_clock.init()
-    #alarm_clock.run()
+    AlarmClock.init()
+    #AlarmClock.run()
