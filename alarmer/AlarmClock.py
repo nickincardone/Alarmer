@@ -35,7 +35,7 @@ def run():
 def view_alarms():
     alarms = execute_query("SELECT * FROM alarms")
     for alarm in alarms:
-        print alarm
+        print(alarm)
 
 def check_for_alarm():
     alarms = execute_query("SELECT * FROM alarms")
@@ -46,4 +46,4 @@ def check_for_alarm():
         else:
             if datetime.now().hour == int(alarm[0]) and datetime.now().minute == int(alarm[1]):
                 LightSwitch.on()
-    print datetime.now()
+    print(datetime.now())
