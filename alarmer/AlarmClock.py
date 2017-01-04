@@ -16,7 +16,7 @@ def execute_query(query):
     conn.commit()
     return c
 
-def add_alarm(hour, minute, song='todo', weekdays='true'):
+def add_alarm(hour, minute, song='todo', weekdays='True'):
     execute_query("INSERT INTO alarms VALUES ('{}','{}','{}','{}')".format(hour, minute, song, weekdays))
 
 def init():
@@ -32,7 +32,19 @@ def run():
     t = Thread(target=run_schedule)
     t.start()
 
-def view_alarms():
+def alarms():
+    alarms = execute_query("SELECT * FROM alarms")
+    resp = []
+    for alarm in alarms:
+        alarm_dict = {}
+        alarm_dict['hour'] = int(alarm[0])
+        alarm_dict['minute'] = int(alarm[1])
+        alarm_dict['song'] = str(alarm[2])
+        alarm_dict['weekdays'] = bool(alarm[3])
+        resp.append(alarm_dict)
+    return resp
+
+def print_alarms():
     alarms = execute_query("SELECT * FROM alarms")
     for alarm in alarms:
         print(alarm)

@@ -2,3 +2,4 @@ venv/
 alarmer/config.py
 *.pyc
 db.sqlite
+.idea/
