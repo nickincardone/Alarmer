@@ -20,7 +20,7 @@ def on():
 def off():
     r = requests.post(url, data=set_body.format("0"), headers=set_headers)
 
-def get_status():
+def status():
     r = requests.post(url, data=get_body, headers=get_headers)
     if r.status_code==200:
         i = r.text.find("</BinaryState>") - 1
