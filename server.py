@@ -9,9 +9,12 @@ def get_alarms():
     if request.method == 'GET':
         return str(AlarmClock.alarms())
     else:
-        print(request.get_json(force=True))
-        return 'bal'
-        #return AlarmClock.create_alarm(request.get_json(force=True))
+        data = request.get_json(force=True)
+        try:
+            AlarmClock.add(data['hour'], data['minute'])
+            return str(AlarmClock.alarms())
+        except KeyError:
+            return '{"error": "Hour and Minute required"}'
 
 @app.route("/api/light/on", methods=['GET'])
 def turn_on_light():

@@ -16,6 +16,9 @@ def execute_query(query):
     conn.commit()
     return c
 
+def add(hour, minute, song='todo', weekdays='True'):
+    execute_query("INSERT INTO alarms VALUES ('{}','{}','{}','{}')".format(hour, minute, song, weekdays))
+
 def add_alarm(hour, minute, song='todo', weekdays='True'):
     execute_query("INSERT INTO alarms VALUES ('{}','{}','{}','{}')".format(hour, minute, song, weekdays))
 
