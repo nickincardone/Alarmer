@@ -10,10 +10,10 @@ def get_alarms():
         return str(AlarmClock.alarms())
     else:
         data = request.get_json(force=True)
-        try:
-            AlarmClock.add(data['hour'], data['minute'])
+        if 'hour' in data and 'minute' in data:
+            AlarmClock.add(data)
             return str(AlarmClock.alarms())
-        except KeyError:
+        else:
             return '{"error": "Hour and Minute required"}'
 
 @app.route("/api/light/on", methods=['GET'])

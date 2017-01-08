@@ -10,21 +10,22 @@ dir = os.path.dirname(__file__)
 filename = os.path.join(dir, '..','db.sqlite')
 conn = sqlite3.connect(filename)
 
+def init():
+    execute_query('''CREATE TABLE IF NOT EXISTS alarms
+             (hour text, minute text, song text, weekdays text)''')
+
 def execute_query(query):
     c = conn.cursor()
     c.execute(query)
     conn.commit()
     return c
 
-def add(hour, minute, song='todo', weekdays='True'):
+def add(data):
+    hour = data['hour']
+    minute = data['minute']
+    song = str(data['song']) if 'song' in data else ''
+    weekdays = str(data['weekdays']) if 'weekdays' in data and type(data['weekdays']) is bool else 'False'
     execute_query("INSERT INTO alarms VALUES ('{}','{}','{}','{}')".format(hour, minute, song, weekdays))
-
-def add_alarm(hour, minute, song='todo', weekdays='True'):
-    execute_query("INSERT INTO alarms VALUES ('{}','{}','{}','{}')".format(hour, minute, song, weekdays))
-
-def init():
-    execute_query('''CREATE TABLE IF NOT EXISTS alarms
-             (hour text, minute text, song text, weekdays text)''')
 
 def run_schedule():
     while 1:
@@ -43,7 +44,7 @@ def alarms():
         alarm_dict['hour'] = int(alarm[0])
         alarm_dict['minute'] = int(alarm[1])
         alarm_dict['song'] = str(alarm[2])
-        alarm_dict['weekdays'] = bool(alarm[3])
+        alarm_dict['weekdays'] = True if alarm[3].upper()=='TRUE' else False
         resp.append(alarm_dict)
     return resp
 
