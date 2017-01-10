@@ -16,6 +16,11 @@ def get_alarms():
         else:
             return '{"error": "Hour and Minute required"}'
 
+@app.route("/api/alarms/<int:alarm_id>", methods=['DELETE'])
+def delete_alarm(alarm_id):
+    AlarmClock.delete(alarm_id)
+    return str(AlarmClock.alarms())
+
 @app.route("/api/light/on", methods=['GET'])
 def turn_on_light():
     LightSwitch.on()
